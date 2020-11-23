@@ -2,6 +2,9 @@
 
 source /usr/local/etc/ocp4.config
 
+oc new-project ${RHT_OCP4_DEV_USER}-container-build
+
+
 cp -vaf container-build/Dockerfile.unprivileged container-build/Dockerfile
 
 oc new-app --as-deployment-config --name hola \
