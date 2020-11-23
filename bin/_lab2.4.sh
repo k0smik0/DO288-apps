@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source /usr/local/etc/ocp4.config
 
 cp -vaf container-build/Dockerfile.unprivileged container-build/Dockerfile
 
