@@ -27,3 +27,12 @@ oc describe cm/myappconf ; pause
 oc create secret generic myappfilesec --from-file /home/student/DO288-apps/app-config/myapp.sec ; pause
 
 oc get secret/myappfilesec -o json ; pause
+
+echo "5"
+oc set env dc/myapp --from configmap/myappconf ; pause
+
+# also from /home/student/DO288/labs/app-config/inject-secret-file.sh
+oc set volume dc/myapp --add -t secret -m /opt/app-root/secure --name myappsec-vol --secret-name myappfilesec ; pause
+
+echo "6.1"
+oc status ; pause
