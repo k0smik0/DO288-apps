@@ -21,3 +21,17 @@ echo 4.2
 oc start-build elvis
 
 oc get pods
+
+echo 7
+oc expose svc/elvis ; oc get routes
+
+echo 7.3
+#curl http://elvis-${RHT_OCP4_DEV_USER}-design-container.${RHT_OCP4_WILDCARD_DOMAIN}/api/hello
+curl "$(oc get route| tail -1 | awk {print $2})/api/hello"
+
+echo 8
+oc create configmap appconfig --from-literal APP_MSG="Elvis lives"
+oc set env dc/elvis --from configmap/appconfig
+
+echo 9
+pod=$(oc get pods | grep Running | awk '{print $1}'); oc rsh $pod env | grep APP_MSG
