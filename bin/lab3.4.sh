@@ -9,18 +9,11 @@ source $HOME/DO288-apps/bin/_oc_get_pods_last_running.sh
 
 
 function __1() {
-lab expose-registry start
-
-
-
-echo "insert your quay password"
-podman login -u ${RHT_OCP4_QUAY_USER} quay.io
-pause
-skopeo copy oci:/home/student/DO288/labs/external-registry/ubi-sleep docker://quay.io/${RHT_OCP4_QUAY_USER}/ubi-sleep:1.0
-pause
-podman search quay.io/ubi-sleep
-pause
-skopeo inspect docker://quay.io/${RHT_OCP4_QUAY_USER}/ubi-sleep:1.0
+	lab expose-registry start
+	oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+	oc get route -n openshift-image-registry
+	INTERNAL_REGISTRY=$( oc get route default-route -n openshift-image-registry -o jsonpath='{.spec.host}' )
+	echo ${INTERNAL_REGISTRY}
 }
 
 function __2() {
