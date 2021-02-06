@@ -69,31 +69,31 @@ pause
 
 	echo 4.1.3.2
 	oc logs -f bc/${deployed_app_name}
-_pause
+pause
 
 	echo 4.1.3.3
 	oc get pods
-_pause
+pause
 
 	echo 4.1.3.4
 	oc expose svc/${deployed_app_name}
-_pause
+pause
 	
 	echo 4.1.3.5
 	oc get route
-_pause
+pause
 	
 	echo 4.1.3.6
 	echo "executing: curl http://${deployed_app_name}-${RHT_OCP4_DEV_USER}-${lab_name}.${RHT_OCP4_WILDCARD_DOMAIN}"
 	curl http://${deployed_app_name}-${RHT_OCP4_DEV_USER}-${lab_name}.${RHT_OCP4_WILDCARD_DOMAIN}
-_pause
+pause
 }
 
 function __4() {
 	oc get bc
-_pause
+pause
 	oc get builds
-_pause
+pause
 }
 
 # Update the application to version 2.0.
@@ -102,26 +102,26 @@ function __5() {
 	echo "'String msg = \"I am running on server \"+host+\" Version 2.0 \\n\";'" >> ${source_file}
 	echo "open ${source_file} and rearrange the last line: use it to replace the original"
 	vi ${source_file}
-_pause
+pause
 	cd java-serverhost
 	git commit -a -m 'Update the version'
-_pause
+pause
 	# 4.1.5.3 ...
 	oc start-build bc/jhost
-_pause
+pause
 	oc cancel-build bc/jhost
-_pause
+pause
 	oc get builds
-_pause
+pause
 	git push
-_pause
+pause
 	oc start-build bc/jhost
-_pause
+pause
 	oc get builds
-_pause
+pause
 	oc logs -f build/jhost-3
 	oc get pods
-_pause
+pause
 	curl http://jhost-${RHT_OCP4_DEV_USER}-${lab_name}.${RHT_OCP4_WILDCARD_DOMAIN}
 }	
 
