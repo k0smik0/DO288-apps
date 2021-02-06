@@ -6,15 +6,19 @@ source $HOME/DO288-apps/bin/_pause.sh
 source $HOME/DO288-apps/bin/_main.sh
 source $HOME/DO288-apps/bin/_oc_get_pods_last_running.sh
 
-[ $# -lt 1 ] && echo "not enough arguments" && echo &&  __help && localHelp && exit 1
+function __list() { 
+	echo "3.6 available commands"; 
+}
 
+function __localHelp() {
+	echo "eventually run 'pre' for: 'lab image-stream finish/start'"
+}
+
+[ $# -lt 1 ] && echo "not enough arguments" && echo &&  __help && __localHelp && exit 1
 # do not touch - end #
 
-### the business from here ###
 
-function localHelp() {
-	echo "eventually run 'pre' for: 'lab expose-registry finish/start'"
-}
+### the business from here ###
 
 function __pre() {
 	lab image-stream finish
@@ -24,6 +28,7 @@ function __pre() {
 function __1() {
 	$HOME/DO288-apps/bin/_oc_login.sh
 # oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+pause
   oc new-project ${RHT_OCP4_DEV_USER}-common
 }
 
