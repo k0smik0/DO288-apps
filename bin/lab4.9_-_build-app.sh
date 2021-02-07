@@ -131,6 +131,7 @@ function __6() {
 	
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "3" "Start a new build using the webhook URL, and the secret discovered from the output of the previous steps. The error message about 'invalid Content-Type on payload' can be safely ignored." "curl -X POST -k ${RHT_OCP4_MASTER_API}/apis/build.openshift.io/v1/namespaces/${RHT_OCP4_DEV_USER}-${lab_name}/buildconfigs/${app_name}/webhooks/${app_generic_secret}/generic"
 	local app_generic_secret=$(oc get bc ${app_name} -o yaml | grep -A10 generic | grep secret | awk '{print $2}')
+	RHT_OCP4_MASTER_API=$(echo ${RHT_OCP4_MASTER_API} | sed 's/\///g')
 	curl -X POST -k ${RHT_OCP4_MASTER_API}/apis/build.openshift.io/v1/namespaces/${RHT_OCP4_DEV_USER}-${lab_name}/buildconfigs/${app_name}/webhooks/${app_generic_secret}/generic
 	___pause
 	
