@@ -1,5 +1,11 @@
 #!/bin/bash
 
+function ___pause() {
+	echo ""
+	read -s -n 1 -p "Press any key to continue . . ."
+	echo ""
+}
+
 function ___oc_login() {
   oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
 }
@@ -40,4 +46,9 @@ function ___commandWithDescriptionPrint() {
 	
 	echo "${lab_number}.${chapter_number}.${paragraph_number}:: $4"
 	echo "${lab_number}.${chapter_number}.${paragraph_number}:: $5"
+}
+
+function ___oc_get_pods_last_running() {
+ pod=$(oc get pods | grep Running | tail -n 1 | awk '{print $1}')
+ echo $pod
 }
