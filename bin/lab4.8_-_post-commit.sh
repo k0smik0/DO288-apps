@@ -33,10 +33,6 @@ function __pre() {
 	lab ${lab_name} start
 }
 
-# app_container_name="php-info"
-app_resource_name="jhost"
-source_file=$HOME/DO288-apps/java-serverhost/src/main/java/com/redhat/training/example/javaserverhost/rest/ServerHostEndPoint.java
-
 function __1() {
 	echo "4.8.1.2:: login:: _oc_login"
 	#$HOME/DO288-apps/bin/_oc_login.sh
@@ -49,7 +45,6 @@ ___pause
 	echo "4.8.1.4:: oc status"
 	oc status
 }
-
 
 deployed_app_name="hook"
 
@@ -133,6 +128,6 @@ function __5() {
 function __end() {
 	lab ${lab_name} finish
 }
-
+	
 
 ___execute $1
