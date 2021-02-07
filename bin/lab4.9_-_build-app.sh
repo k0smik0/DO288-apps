@@ -125,12 +125,12 @@ function __6() {
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "2" "Get the secret for the webhook by running the oc get bc command, and pass the -o json option to dump the build config details in JSON." "oc get bc ${app_name} ...blabla..."
 	echo "using (internal) jsonpath: 'oc get bc simple -o jsonpath=\"{.spec.triggers[*].generic.secret}{\'\n\'}\"'"
 	oc get bc simple -o jsonpath="{.spec.triggers[*].generic.secret}{'\n'}"
-	echo "using grep+awk"
-	local app_generic_secret=$(oc get bc ${app_name} -o yaml | grep -A10 generic | grep secret | awk '{print $2}')
-	echo "really, fix the last command"
+	echo "using grep+awk: oc get bc ${app_name} -o yaml | grep -A10 generic | grep secret | awk '{print $2}'"
+	oc get bc ${app_name} -o yaml | grep -A10 generic | grep secret | awk '{print $2}'
 	___pause
 	
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "3" "Start a new build using the webhook URL, and the secret discovered from the output of the previous steps. The error message about 'invalid Content-Type on payload' can be safely ignored." "curl -X POST -k ${RHT_OCP4_MASTER_API}/apis/build.openshift.io/v1/namespaces/${RHT_OCP4_DEV_USER}-${lab_name}/buildconfigs/${app_name}/webhooks/${app_generic_secret}/generic"
+	local app_generic_secret=$(oc get bc ${app_name} -o yaml | grep -A10 generic | grep secret | awk '{print $2}')
 	curl -X POST -k ${RHT_OCP4_MASTER_API}/apis/build.openshift.io/v1/namespaces/${RHT_OCP4_DEV_USER}-${lab_name}/buildconfigs/${app_name}/webhooks/${app_generic_secret}/generic
 	___pause
 	
