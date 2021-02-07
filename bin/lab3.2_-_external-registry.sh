@@ -59,6 +59,6 @@ skopeo delete docker://quay.io/${RHT_OCP4_QUAY_USER}/ubi-sleep:1.0
 
 
 
-[ $# -lt 1 ] && __help && exit 1
+[ $# -lt 1 ] && ___help && exit 1
 
-_execute $1
+___execute $1

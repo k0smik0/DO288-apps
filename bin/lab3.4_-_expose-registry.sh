@@ -6,7 +6,7 @@ source $HOME/DO288-apps/bin/_pause.sh
 source $HOME/DO288-apps/bin/_main.sh
 source $HOME/DO288-apps/bin/_oc_get_pods_last_running.sh
 
-[ $# -lt 1 ] && echo "not enough arguments" && echo &&  __help && localHelp && exit 1
+[ $# -lt 1 ] && echo "not enough arguments" && echo &&  ___help && localHelp && exit 1
 
 # do not touch - end #
 
@@ -72,4 +72,4 @@ skopeo delete docker://quay.io/${RHT_OCP4_QUAY_USER}/ubi-sleep:1.0
 
 
 
-_execute $1
+___execute $1

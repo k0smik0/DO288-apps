@@ -6,7 +6,7 @@ source $HOME/DO288-apps/bin/_pause.sh
 source $HOME/DO288-apps/bin/_main.sh
 source $HOME/DO288-apps/bin/_oc_get_pods_last_running.sh
 
-function __list() { 
+function ___list() { 
 	echo "3.6 available commands"; 
 }
 
@@ -14,7 +14,7 @@ function __localHelp() {
 	echo "eventually run 'pre' for: 'lab image-stream finish/start'"
 }
 
-[ $# -lt 1 ] && echo "not enough arguments" && echo &&  __help && __localHelp && exit 1
+[ $# -lt 1 ] && echo "not enough arguments" && echo &&  ___help && __localHelp && exit 1
 # do not touch - end #
 
 
@@ -67,4 +67,4 @@ function __end() {
 }
 
 
-_execute $1
+___execute $1

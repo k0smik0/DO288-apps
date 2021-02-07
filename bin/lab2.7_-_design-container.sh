@@ -66,4 +66,4 @@ curl "$(oc get route| tail -1 | awk '{print $2}')/api/hello"
 
 [ $# -lt 1 ] && _help && exit 1
 
-_execute $1
+___execute $1

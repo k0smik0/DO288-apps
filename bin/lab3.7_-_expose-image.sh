@@ -18,7 +18,7 @@ function __localHelp() {
 }
 
 # do not touch - begin #
-[ $# -lt 1 ] && echo "not enough arguments" && echo &&  __help && __localHelp && exit 1
+[ $# -lt 1 ] && echo "not enough arguments" && echo &&  ___help && ___localHelp && exit 1
 # do not touch - end #
 
 
@@ -94,4 +94,4 @@ function __end() {
 }
 
 
-_execute $1
+___execute $1
