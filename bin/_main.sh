@@ -46,8 +46,8 @@ function ___commandWithDescriptionPrint() {
 	local command=$5
 
 	echo ""	
-	echo "${lab_number}.${chapter_number}.${paragraph_number}:: $4"
-	echo "${lab_number}.${chapter_number}.${paragraph_number}:: $5"
+	echo "${lab_number}.${chapter_number}.${paragraph_number}:: description: $4"
+	echo "${lab_number}.${chapter_number}.${paragraph_number}:: command: $5"
 }
 
 function ___oc_get_pods_last_running() {

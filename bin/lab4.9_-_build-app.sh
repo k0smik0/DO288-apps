@@ -93,7 +93,8 @@ function __4() {
 	___pause
 	
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "2" "get the route" "oc get route/${app_name} -o jsonpath='{.spec.host}{\"\n\"}'"
-	oc get route/${app_name} -o jsonpath='{.spec.host}{\"\n\"}'
+	oc get route/${app_name} -o jsonpath='{.spec.host}{"\n"}'
+	oc get route | grep ${app_name} | awk '{print $2}'
 	___pause
 }
 
@@ -106,7 +107,8 @@ function __5() {
 	___pause
 	
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "2" "verify it is ready/running" "curl BLA BLA from 4.8.4.2 (the route)"
-	local target=$(oc get route/${app_name} -o jsonpath='{.spec.host}{\"\n\"}')
+	local target=$(oc get route/${app_name} -o jsonpath='{.spec.host}{"\n"}')
+	local target=$(oc get route | grep ${app_name} | awk '{print $2}')
 	echo "curl the url got from oc get route bla bla, that is also: 'simple-${RHT_OCP4_DEV_USER}-build-app.${RHT_OCP4_WILDCARD_DOMAIN}'"
 	curl ${target}
 	___pause
@@ -120,19 +122,40 @@ function __6() {
 	oc describe bc ${app_name}
 	___pause
 	
-	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "2" "Get the secret for the webhook by running the oc get bc command, and pass the -o json option to dump the build config details in JSON." "oc get bc ${app_name} | grep secret or whatever..."
-	oc get bc ${app_name}
+	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "2" "Get the secret for the webhook by running the oc get bc command, and pass the -o json option to dump the build config details in JSON." "oc get bc ${app_name} ...blabla..."
+	echo "using (internal) jsonpath: 'oc get bc simple -o jsonpath=\"{.spec.triggers[*].generic.secret}{\'\n\'}\"'"
+	oc get bc simple -o jsonpath="{.spec.triggers[*].generic.secret}{'\n'}"
+	echo "using grep+awk"
+	local app_generic_secret=$(oc get bc ${app_name} -o yaml | grep -A10 generic | grep secret | awk '{print $2}')
 	echo "really, fix the last command"
 	___pause
 	
-	# ___commandWithDescriptionPrint ${lab_number} ${lab_chap} "3" "Get the generic webhook URL that starts a new build, with the oc describe command." "oc describe bc ${app_name}"
-	# oc describe bc ${app_name}
-	# ___pause
+	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "3" "Start a new build using the webhook URL, and the secret discovered from the output of the previous steps. The error message about 'invalid Content-Type on payload' can be safely ignored." "curl -X POST -k ${RHT_OCP4_MASTER_API}/apis/build.openshift.io/v1/namespaces/${RHT_OCP4_DEV_USER}-${lab_name}/buildconfigs/${app_name}/webhooks/${app_generic_secret}/generic"
+	curl -X POST -k ${RHT_OCP4_MASTER_API}/apis/build.openshift.io/v1/namespaces/${RHT_OCP4_DEV_USER}-${lab_name}/buildconfigs/${app_name}/webhooks/${app_generic_secret}/generic
+	___pause
+	
+	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "4" "list for builds" "oc get builds"
+	oc get builds
+	___pause
+
+	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "5" "wait for builds finishing" "oc logs -f bc/${app_name}"
+	oc logs -f bc/${app_name}
+	___pause
+	
+	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "6" "check pods" "oc get pods"
+	oc get pods
+	___pause
 }
 
 function __7() {
-	echo "4.8.5.1:: clean up"
-	oc delete project ${RHT_OCP4_DEV_USER}-post-commit
+	local lab_chap="7"
+	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "1" "grade" "lab build-app grade"
+	lab build-app grade
+}
+
+function __8() {
+	local lab_chap="8"
+	oc delete project ${RHT_OCP4_DEV_USER}-${lab_name}
 }
 
 function __end() {
