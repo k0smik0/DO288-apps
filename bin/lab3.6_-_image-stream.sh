@@ -28,32 +28,32 @@ function __pre() {
 function __1() {
 	$HOME/DO288-apps/bin/_oc_login.sh
 # oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
-pause
+___pause
   oc new-project ${RHT_OCP4_DEV_USER}-common
 }
 
 
 function __2() {
 	skopeo inspect docker://quay.io/redhattraining/hello-world-nginx
-pause
+___pause
 	oc import-image hello-world --confirm --from quay.io/redhattraining/hello-world-nginx
-pause
+___pause
 	oc get istag
-pause
+___pause
 	oc describe is hello-world
 }
 
 function __3() {
 	oc new-project ${RHT_OCP4_DEV_USER}-image-stream
-pause
+___pause
 	oc new-app --as-deployment-config --name hello -i ${RHT_OCP4_DEV_USER}-common/hello-world
-pause
+___pause
 	oc get pod
-pause
+___pause
 	oc expose svc hello
-pause
+___pause
 	oc get route
-pause
+___pause
 	curl http://hello-${RHT_OCP4_DEV_USER}-image-stream.${RHT_OCP4_WILDCARD_DOMAIN}
 }
 

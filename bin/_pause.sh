@@ -4,7 +4,7 @@
 #  echo $1
 #}
 
-function pause() {
+function ___pause() {
  read -s -n 1 -p "Press any key to continue . . ."
  echo ""
 }

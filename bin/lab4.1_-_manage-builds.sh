@@ -4,7 +4,7 @@ lab_name="manage-builds"
 
 # do not touch - begin #
 source /usr/local/etc/ocp4.config 
-source $HOME/DO288-apps/bin/pause.sh
+source $HOME/DO288-apps/bin/_pause.sh
 source $HOME/DO288-apps/bin/_main.sh
 source $HOME/DO288-apps/bin/_oc_get_pods_last_running.sh
 # do not touch - end #
@@ -41,15 +41,15 @@ source_file=$HOME/DO288-apps/java-serverhost/src/main/java/com/redhat/training/e
 function __1() {
 	$HOME/DO288-apps/bin/_oc_login.sh
 	oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
-pause
+___pause
 	ls ${source_file}
-pause
+___pause
 }
 
 
 function __2() {
 	oc new-project ${RHT_OCP4_DEV_USER}-${lab_name}
-pause	
+___pause	
 }
 
 deployed_app_name="jhost"
@@ -65,35 +65,35 @@ function __3() {
 https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps#${lab_name} \
 --context-dir java-serverhost
 	echo
-pause
+___pause
 
 	echo 4.1.3.2
 	oc logs -f bc/${deployed_app_name}
-pause
+___pause
 
 	echo 4.1.3.3
 	oc get pods
-pause
+___pause
 
 	echo 4.1.3.4
 	oc expose svc/${deployed_app_name}
-pause
+___pause
 	
 	echo 4.1.3.5
 	oc get route
-pause
+___pause
 	
 	echo 4.1.3.6
 	echo "executing: curl http://${deployed_app_name}-${RHT_OCP4_DEV_USER}-${lab_name}.${RHT_OCP4_WILDCARD_DOMAIN}"
 	curl http://${deployed_app_name}-${RHT_OCP4_DEV_USER}-${lab_name}.${RHT_OCP4_WILDCARD_DOMAIN}
-pause
+___pause
 }
 
 function __4() {
 	oc get bc
-pause
+___pause
 	oc get builds
-pause
+___pause
 }
 
 # Update the application to version 2.0.
@@ -102,32 +102,32 @@ function __5() {
 	echo "'String msg = \"I am running on server \"+host+\" Version 2.0 \\n\";'" >> ${source_file}
 	echo "open ${source_file} and rearrange the last line: use it to replace the original"
 	vi ${source_file}
-pause
+___pause
 	cd java-serverhost
 	git commit -a -m 'Update the version'
-pause
+___pause
 	# 4.1.5.3 ...
 	oc start-build bc/jhost
-pause
+___pause
 	oc cancel-build bc/jhost
-pause
+___pause
 	oc get builds
-pause
+___pause
 	git push
-pause
+___pause
 	oc start-build bc/jhost
-pause
+___pause
 	oc get builds
-pause
+___pause
 	oc logs -f build/jhost-3
 	oc get pods
-pause
+___pause
 	curl http://jhost-${RHT_OCP4_DEV_USER}-${lab_name}.${RHT_OCP4_WILDCARD_DOMAIN}
 }	
 
 function __6() {
 	oc delete project ${RHT_OCP4_DEV_USER}-${lab_name}
-pause
+___pause
 }
 
 function __end() {

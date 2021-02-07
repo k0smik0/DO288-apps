@@ -8,11 +8,11 @@ source $HOME/DO288-apps/bin/_oc_get_pods_last_running.sh
 
 function __2() {
  echo 2.2 ;
- oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API} ; pause
+ oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API} ; ___pause
  echo 2.3 ;
- oc new-project ${RHT_OCP4_DEV_USER}-design-container ; pause
+ oc new-project ${RHT_OCP4_DEV_USER}-design-container ; ___pause
  echo 2.4 ;
- oc new-app --as-deployment-config --name elvis https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps#design-container --context-dir hello-java ; pause
+ oc new-app --as-deployment-config --name elvis https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps#design-container --context-dir hello-java ; ___pause
 }
 
 function __4() {
@@ -32,9 +32,9 @@ function __5() {
 
 function __6() {
 echo 6
-oc start-build elvis ; pause
-oc logs bc/elvis ; pause
-oc get pods ; pause
+oc start-build elvis ; ___pause
+oc logs bc/elvis ; ___pause
+oc get pods ; ___pause
 pod_to_read_log=$(oc_get_pods_last_running)
 oc logs $pod_to_read_log
 }

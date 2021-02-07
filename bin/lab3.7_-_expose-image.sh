@@ -35,57 +35,57 @@ app_resource_name="info"
 function __1() {
 	$HOME/DO288-apps/bin/_oc_login.sh
 	oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
-pause
+___pause
 	podman login -u ${RHT_OCP4_QUAY_USER} quay.io
-pause
+___pause
 	skopeo copy oci:/home/student/DO288/labs/${lab_name}/${app_container_name} docker://quay.io/${RHT_OCP4_QUAY_USER}/${app_container_name}
-pause
+___pause
 	skopeo inspect docker://quay.io/${RHT_OCP4_QUAY_USER}/${app_container_name}
-pause
+___pause
 }
 
 
 function __2() {
 	oc new-project ${RHT_OCP4_DEV_USER}-common
-pause	
+___pause	
 	oc create secret generic quayio --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson
-pause	
+___pause	
 	oc import-image ${app_container_name} --confirm --from quay.io/${RHT_OCP4_QUAY_USER}/${app_container_name}
-pause
+___pause
 	oc get istag
 }
 
 function __3() {
 	oc new-project ${RHT_OCP4_DEV_USER}-${lab_name}
-pause
+___pause
 	# Grant service accounts from the new youruser-expose-image project access to image streams from the youruser-common project.
 	oc policy add-role-to-group -n ${RHT_OCP4_DEV_USER}-common system:image-puller system:serviceaccounts:${RHT_OCP4_DEV_USER}-${lab_name}
-pause
+___pause
 	oc new-app --as-deployment-config --name ${app_resource_name} -i ${RHT_OCP4_DEV_USER}-common/${app_container_name}
-pause
+___pause
 	oc get pods
-pause	
+___pause	
 }
 
 function __4() {
 	oc expose svc "info"
-pause
+___pause
 	oc get route "info"	
-pause
+___pause
 	curl http://info-${RHT_OCP4_DEV_USER}-${lab_name}.${RHT_OCP4_WILDCARD_DOMAIN}
-pause
+___pause
 }
 
 function __5() {
 	lab ${lab_name} grade
-pause	
+___pause	
 }	
 
 function __6() {
 	oc delete project ${RHT_OCP4_DEV_USER}-${lab_name}
-pause
+___pause
 	oc delete project ${RHT_OCP4_DEV_USER}-common
-pause
+___pause
 	skopeo delete docker://quay.io/${RHT_OCP4_QUAY_USER}/${app_container_name}:latest
 }
 
