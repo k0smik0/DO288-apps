@@ -34,6 +34,7 @@ function ___chapterDescriptionPrint() {
 	local chapter_number=$2
 	local description=$3
 	
+	echo ""; echo ""
 	echo "${lab_number}.${chapter_number}:: $3"
 }
 
@@ -43,7 +44,8 @@ function ___commandWithDescriptionPrint() {
 	local paragraph_number=$3
 	local description=$4
 	local command=$5
-	
+
+	echo ""	
 	echo "${lab_number}.${chapter_number}.${paragraph_number}:: $4"
 	echo "${lab_number}.${chapter_number}.${paragraph_number}:: $5"
 }
