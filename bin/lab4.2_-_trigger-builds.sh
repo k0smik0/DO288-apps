@@ -4,7 +4,7 @@ lab_name="trigger-builds"
 
 # do not touch - begin #
 source /usr/local/etc/ocp4.config 
-source $HOME/DO288-apps/bin/pause.sh
+source $HOME/DO288-apps/bin/_pause.sh
 source $HOME/DO288-apps/bin/_main.sh
 source $HOME/DO288-apps/bin/_oc_get_pods_last_running.sh
 # do not touch - end #
