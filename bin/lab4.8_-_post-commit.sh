@@ -117,11 +117,11 @@ function __4() {
 	
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "4" "Get the builds-for-managers exposed route:" "oc get route/builds-for-managers -o jsonpath='{.spec.host}{\"\n\"}'"
 	oc get route/builds-for-managers -o jsonpath='{.spec.host}{"\n"}'
-	oc get router/builds-for-managers
+	oc get route/builds-for-managers
 	___pause
 
-	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "5" "Open a web browser to access http://builds-for-managers-youruser-post-commit.apps.cluster.domain.example.com. The page displays all the builds and the developer who started each one." "echo xdg http://builds-for-managers-${RHT_OCP4_DEV_USER}-post-commit.apps.ECC"
-	echo "xdg http://builds-for-managers-${RHT_OCP4_DEV_USER}-post-commit.apps.ECC"
+	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "5" "Open a web browser to access http://builds-for-managers-${RHT_OCP4_DEV_USER}-post-commit.${RHT_OCP4_WILDCARD_DOMAIN} . The page displays all the builds and the developer who started each one." "echo xdg http://builds-for-managers-${RHT_OCP4_DEV_USER}-post-commit.${RHT_OCP4_WILDCARD_DOMAIN}"
+	echo "xdg http://builds-for-managers-${RHT_OCP4_DEV_USER}-post-commit.${RHT_OCP4_WILDCARD_DOMAIN}"
 	___pause
 }
 
