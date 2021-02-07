@@ -58,8 +58,8 @@ function __2() {
 	___chapterDescriptionPrint ${lab_number} ${lab_chap} "create a new application."
 	
 	# 1
-	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "1" "Create a new application from sources in Git. Name the application as hook and prepend the php:7.3 image stream to the Git repository URL using a tilde (~)." 'oc new-app --deployment-config ${deployed_app_name} php:7.3~http://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps --context-dir ${lab_name}'
-	oc new-app --deployment-config ${deployed_app_name} php:7.3~http://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps --context-dir ${lab_name}
+	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "1" "Create a new application from sources in Git. Name the application as hook and prepend the php:7.3 image stream to the Git repository URL using a tilde (~)." 'oc new-app --as-deployment-config ${deployed_app_name} php:7.3~http://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps --context-dir ${lab_name}'
+	oc new-app --as-deployment-config ${deployed_app_name} php:7.3~http://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps --context-dir ${lab_name}
 	___pause
 	
 	# 2
