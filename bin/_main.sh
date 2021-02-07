@@ -1,5 +1,9 @@
 #!/bin/bash
 
+function ___oc_login() {
+  oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+}
+
 function ___help() {
 	echo "global help:"
 	echo "- $(basename $0) 'list' :list available functions"
