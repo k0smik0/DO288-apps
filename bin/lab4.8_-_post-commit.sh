@@ -130,7 +130,7 @@ function __5() {
 	oc delete project ${RHT_OCP4_DEV_USER}-post-commit
 }
 
-#function __end() {
+function __end() {
 	lab ${lab_name} finish
 }
 
