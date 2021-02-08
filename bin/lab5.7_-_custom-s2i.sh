@@ -204,7 +204,7 @@ function __9() {
   ___pause
   
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "check the logs" "oc logs -f bc/${app_name}"
-  oc logs -f bc/greet
+  oc logs -f bc/${app_name}
   ___pause
   
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 3 "wait the pods" "oc get pods"
@@ -216,7 +216,7 @@ function __9() {
   ___pause
   
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 5 "get the route" "oc get route/${app_name} | grep host bla bla"
-	target_route=$(oc get route/greet -o json | grep host | grep -v generated | awk '{print }' | uniq | sed 's/[",]//g')
+	target_route=$(oc get route/${app_name} | grep host | grep -v generated | awk '{print $2}' | uniq | sed 's/[",]//g')
   echo ${target_route}
   ___pause
   
@@ -231,13 +231,15 @@ function __10() {
   
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 1 "add --lang es at the end of 'run'"
   mkdir -p $HOME/DO288-apps/go-hello/.s2i/bin
-  cp -a $HOME/DO288/labs/custom-s2i/s2i/bin/run $HOME/DO288-apps/go-hello/.s2i/bin/
-  echo " --lang es" >> $HOME/DO288-apps/go-hello/.s2i/bin/run
-  vi $HOME/DO288-apps/go-hello/.s2i/bin/run
+	local new_run="$HOME/DO288-apps/go-hello/.s2i/bin/run"
+  cp -a $HOME/DO288/labs/custom-s2i/s2i/bin/run $local_run
+  echo " --lang es" >> $local_run
+  vi $local_run
   ___pause
 
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "commit" "git ..."
-  cd $HOME/DO288-apps/go-hello/; git add . ; git commit -m "changed language to go app"; git push origin ${lab_name}
+	cd $HOME/DO288-apps/go-hello/
+  git add . ; add git commit -m "changed language to go app"; git push origin ${lab_name}
   cd $HOME
   ___pause
 }
@@ -249,15 +251,24 @@ function __11() {
   oc start-build ${app_name}
   oc logs -f bc/${app_name}
   oc get pods
-#  target_route=$(oc get route/${app_name} | grep host)
+  #target_route=$(oc get route/${app_name} | grep host)
   echo ${target_route}
   curl ${target_route}/${resource_to_test}
   ___pause
 }
 
 
-function ___12() {
-  lab build-app grade
+function __12() {
+  lab ${lab_name} grade
+}
+
+function __13() {
+	echo "clean/delete various"
+	
+	oc delete project ${RHT_OCP4_DEV_USER}-custom-s2i ;
+	sudo podman rm go-test ;
+	sudo podman rmi -f localhost/s2i-go-app localhost/s2i-do288-go registry.access.redhat.com/ubi8/ubi:8.0 ;
+	sudo skopeo delete docker://quay.io/${RHT_OCP4_QUAY_USER}/s2i-do288-go:latest ;
 }
 
 function __end() {
