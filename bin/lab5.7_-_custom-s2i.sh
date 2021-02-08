@@ -173,6 +173,7 @@ function __7() {
   ___chapterDescriptionPrint ${lab_number} ${lab_chap} "checkout master branch"
   cd $HOME/DO288-apps
   git checkout master
+	echo "do manually the following:\ngit checkout -b ${lab_name} ; git checkout chap_5 -- bin ; git push origin ${lab_name}"
   ___pause
 }
 
@@ -180,10 +181,8 @@ function __7() {
 function __8() {
 	local lab_chap="8"
 	
-  ___chapterDescriptionPrint ${lab_number} ${lab_chap} "branch from master, bla bla"
-  git checkout -b ${lab_name}
-  git checkout chap_5 -- bin
-  git push origin ${lab_name}
+  ___chapterDescriptionPrint ${lab_number} ${lab_chap} "branched from master, bla bla"
+  echo "did the following:\ngit checkout -b ${lab_name}; git checkout chap_5 -- bin ; git push origin ${lab_name}"
   cd $HOME
   ___pause  
 }
