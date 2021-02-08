@@ -82,8 +82,8 @@ function __4() {
 	___pause
 	
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} 1 "create and go to ${test_application_container_image}" "mkdir/cd ${test_application_container_image}"
-	mkdir -f $HOME/${test_application_container_image}
-	cd $HOMEDO288/labs/${lab_name}
+	[ -d $HOME/${test_application_container_image} ] || mkdir $HOME/${test_application_container_image}
+	cd $HOME/DO288/labs/${lab_name}
 	___pause
 	
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "Use the s2i build command to produce a Dockerfile for the application container image:" "s2i build test/test-app ${test_application_container_image} --as-dockerfile $HOME/${test_application_container_image}/Dockerfile"
@@ -91,7 +91,7 @@ function __4() {
 	___pause
 	
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} 3 "Build a test container image from the generated Dockerfile." "'sudo podman build ...' from $HOME/${test_application_container_image}/"
-	$HOME/${test_application_container_image}/
+	cd $HOME/${test_application_container_image}/
 	sudo podman build -t ${test_application_container_image} .
 	___pause
 	
@@ -102,6 +102,8 @@ function __4() {
 	# from track
 	# Ensure that when you test the container you use a random user ID, such as 1234, to simulate running on an OpenShift cluster.
 	# Bind the container port 8080 to local port 8080.
+	local_user=1234
+	bind_port=8080
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} 5 "test the image run as container, locally" "sudo podman run --name go-test -u ${local_user} -p ${bind_port}:${bind_port} -d ${test_application_container_image}"
 	sudo podman run --name ${test_container} -u ${local_user} -p ${bind_port}:${bind_port} -d ${test_application_container_image}
 	___pause
@@ -144,8 +146,8 @@ function __6() {
 	___pause
 	
   
-  ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "login to quay without sudo, so export YOUR auth" "sudo podman login -u ${RHT_OCP4_QUAY_USER} quay.io"
-	sudo podman login -u ${RHT_OCP4_QUAY_USER} quay.io
+  ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "login to quay *without* sudo, so export YOUR auth" "podman login -u ${RHT_OCP4_QUAY_USER} quay.io"
+	podman login -u ${RHT_OCP4_QUAY_USER} quay.io
 	___pause
   
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 3 "create the secret" "(type: generic, name: quayio):: oc create secret generic quayio --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type=kubernetes.io/dockerconfigjson"  
