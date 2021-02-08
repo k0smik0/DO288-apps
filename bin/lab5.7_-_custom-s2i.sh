@@ -82,11 +82,11 @@ function __4() {
 	___pause
 	
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} 1 "create and go to ${test_application_container_image}" "mkdir/cd ${test_application_container_image}"
-	mkdir $HOME/${test_application_container_image}
-	cd $HOME/${test_application_container_image}
+	mkdir -f $HOME/${test_application_container_image}
+	cd $HOMEDO288/labs/${lab_name}
 	___pause
 	
-	___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "Use the s2i build command to produce a Dockerfile for the application container image:"
+	___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "Use the s2i build command to produce a Dockerfile for the application container image:" "s2i build test/test-app ${test_application_container_image} --as-dockerfile $HOME/${test_application_container_image}/Dockerfile"
 	s2i build test/test-app ${test_application_container_image} --as-dockerfile $HOME/${test_application_container_image}/Dockerfile
 	___pause
 	
