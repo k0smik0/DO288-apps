@@ -51,14 +51,13 @@ function __2() {
 	
 	# 1
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} 1 "Edit the Dockerfile at ~/DO288/labs/custom-s2i/Dockerfile, adding the command immediately following the TODO comment" "vi /home/student/DO288/labs/custom-s2i/Dockerfile"
-	echo add "'COPY /home/student/DO288/labs/custom-s2i/bin /usr/libexec/s2i' after TODO"
+  cd /home/student/DO288/labs/custom-s2i/
+  echo "entered in: $(pwd)"
+  ___pause
+	echo add "'COPY ./s2i/bin /usr/libexec/s2i' after TODO"
 	___pause
 	vi /home/student/DO288/labs/custom-s2i/Dockerfile
-	___pause
-	
-	# ___commandWithDescriptionPrint ${lab_number} ${lab_chap} "2" "Verify that the template files have been created. The s2i create command creates the following directory structure:" "tree -a s2i-do288-httpd"
-	# tree -a s2i-do288-httpd
-	# ___pause
+	___pause	
 }
 
 function __3() {
@@ -67,7 +66,7 @@ function __3() {
 	___pause
 
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} 1 "Create the S2I builder image:" "cd $HOME/DO288/labs/custom-s2i ; sudo podman build --format docker -t ${imagestream} ."
-	cd $HOME/DO288/labs/custom-s2i ; sudo podman build --format docker -t ${imagestream} .
+	cd $HOME/DO288/labs/custom-s2i ; pwd; ___pause; sudo podman build --format docker -t ${imagestream} .
 	___pause
 	
 	___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "Verify that the builder image was created:" "sudo podman images"
