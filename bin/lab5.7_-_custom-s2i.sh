@@ -247,7 +247,7 @@ function __11() {
   
   ___chapterDescriptionPrint ${lab_number} ${lab_chap} "rebuild the application, the use logs and get to check pods are running"
   oc start-build ${app_name}
-  oc log -f bc/${app_name}
+  oc logs -f bc/${app_name}
   oc get pods
 #  target_route=$(oc get route/${app_name} | grep host)
   echo ${target_route}
