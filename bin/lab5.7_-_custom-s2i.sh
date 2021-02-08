@@ -45,7 +45,7 @@ test_container="go-test"
 # 5 6 ...
 imagestream="s2i-do288-go"
 # 9
-app_name="great"
+app_name="greet"
 
 function __2() {
 	local lab_chap="2"
@@ -204,7 +204,7 @@ function __9() {
   ___pause
   
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "check the logs" "oc logs -f bc/${app_name}"
-  oc logs -f bc/greet
+  oc logs -f bc/${app_name}
   ___pause
   
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 3 "wait the pods" "oc get pods"
