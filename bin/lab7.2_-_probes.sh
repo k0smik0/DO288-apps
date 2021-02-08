@@ -41,11 +41,12 @@ function __1() {
   ___pause
   
   echo "creating the project"
+  ___oc_login
   oc new-project ${project_name}
   ___pause
   
   echo "deploy the app 'probes'"
-  oc new-app --as-deployment-config --name ${app_name} --build-env npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs nodejs:12~http://github.com/${RHT_OCP4_DEV_USER}/DO288-apps --context-dir ${app_name}
+  oc new-app --as-deployment-config --name ${app_name} --build-env npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs nodejs:12~http://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps --context-dir ${app_name}
   ___pause
   
   echo "view logs, pods, ecc"
