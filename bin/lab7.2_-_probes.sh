@@ -119,7 +119,7 @@ function __4() {
 	___pause
   
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 3 "check the pods" "oc get pods dc/${app_name}"
-  oc get pods dc/${app_name}
+  oc get pods
   ___pause
   
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 5 "check the logs again" "oc logs -f dc/${app_name}"
@@ -136,7 +136,11 @@ function __5() {
   oc get pods
   
   echo "check the last probes-XXX-asdjalskjd running pod, it should be the -3"
-  echo "run: oc descript pods/${app_name}-XXX-asdasdjaskd"
+  echo "run: oc describe pods/${app_name}-XXX-asdasdjaskd"
+}
+
+function __6 {
+  oc delete project ${RHT_OCP4_DEV_USER}-probes
 }
 
 function __end() {
