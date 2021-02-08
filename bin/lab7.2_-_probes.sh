@@ -63,16 +63,16 @@ function __2() {
   oc expose svc ${app_name}
   ___pause
   
-  ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "test the /ready" "curl -i ${project_name}-${RHT_OCP4_DEV_USER}-${app_name}.${RHT_OCP4_WILDCARD_DOMAIN}/ready"
-  curl -i ${project_name}-${RHT_OCP4_DEV_USER}-${app_name}.${RHT_OCP4_WILDCARD_DOMAIN}/ready
+  ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "test the /ready" "curl -i ${app_name}-${project_name}.${RHT_OCP4_WILDCARD_DOMAIN}/ready"
+  curl -i ${app_name}-${project_name}.${RHT_OCP4_WILDCARD_DOMAIN}/ready
   ___pause
   
-  ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 3 "test the /healthz" "curl -i ${project_name}-${RHT_OCP4_DEV_USER}-${app_name}.${RHT_OCP4_WILDCARD_DOMAIN}/healthz"
-  curl -i ${project_name}-${RHT_OCP4_DEV_USER}-${app_name}.${RHT_OCP4_WILDCARD_DOMAIN}/healthz
+  ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 3 "test the /healthz" "curl -i ${app_name}-${project_name}.${RHT_OCP4_WILDCARD_DOMAIN}/healthz"
+  curl -i ${app_name}-${project_name}.${RHT_OCP4_WILDCARD_DOMAIN}/healthz
   ___pause
   
-  ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 4 "test the app response" "curl -i ${project_name}-${RHT_OCP4_DEV_USER}-${app_name}.${RHT_OCP4_WILDCARD_DOMAIN}"
-  curl -i ${project_name}-${RHT_OCP4_DEV_USER}-${app_name}.${RHT_OCP4_WILDCARD_DOMAIN}
+  ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 4 "test the app response" "curl -i ${app_name}-${project_name}.${RHT_OCP4_WILDCARD_DOMAIN}"
+  curl -i ${app_name}-${project_name}.${RHT_OCP4_WILDCARD_DOMAIN}
   ___pause
 }
 
