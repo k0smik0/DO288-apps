@@ -45,7 +45,7 @@ test_container="go-test"
 # 5 6 ...
 imagestream="s2i-do288-go"
 # 9
-app_name="great"
+app_name="greet"
 
 function __2() {
 	local lab_chap="2"
@@ -216,7 +216,7 @@ function __9() {
   ___pause
   
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 5 "get the route" "oc get route/${app_name} | grep host bla bla"
-  target_route=$(oc get route/${app_name} | grep host)
+	target_route=$(oc get route/greet -o json | grep host | grep -v generated | awk '{print }' | uniq | sed 's/[",]//g')
   echo ${target_route}
   ___pause
   
@@ -237,7 +237,7 @@ function __10() {
   ___pause
 
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "commit" "git ..."
-  git commit -m "changed language to go app"; git push origin ${lab_name}
+  cd $HOME/DO288-apps/go-hello/; git add . ; git commit -m "changed language to go app"; git push origin ${lab_name}
   cd $HOME
   ___pause
 }
@@ -249,7 +249,7 @@ function __11() {
   oc start-build ${app_name}
   oc log -f bc/${app_name}
   oc get pods
-  target_route=$(oc get route/${app_name} | grep host)
+#  target_route=$(oc get route/${app_name} | grep host)
   echo ${target_route}
   curl ${target_route}/${resource_to_test}
   ___pause
