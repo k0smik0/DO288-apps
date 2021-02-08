@@ -39,10 +39,13 @@ function __1() {
 	
 }
 
-app_name="great"
-imagestream="s2i-do288-go"
+# 4
 test_application_container_image="s2i-go-app"
 test_container="go-test"
+# 5 6 ...
+imagestream="s2i-do288-go"
+# 9
+app_name="great"
 
 function __2() {
 	local lab_chap="2"
@@ -127,9 +130,9 @@ function __5() {
 	local lab_chap="5"
 	___chapterDescriptionPrint ${lab_number} ${lab_chap} "Push the s2i-do288-go S2I builder image to your personal Quay.io account."
 	
-	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "1" "login to quay, copy using skopeo..." "sudo podman login -u ${RHT_OCP4_QUAY_USER} quay.io ; sudo skopeo copy containers-storage:localhost/${test_application_container_image} docker://quay.io/${RHT_OCP4_QUAY_USER}/${test_application_container_image}"
+	___commandWithDescriptionPrint ${lab_number} ${lab_chap} "1" "login to quay, copy using skopeo..." "sudo podman login -u ${RHT_OCP4_QUAY_USER} quay.io ; sudo skopeo copy containers-storage:localhost/${imagestream} docker://quay.io/${RHT_OCP4_QUAY_USER}/${imagestream}"
 	echo "login to quay.io - insert your password"
-	sudo podman login -u ${RHT_OCP4_QUAY_USER} quay.io ; sudo skopeo copy containers-storage:localhost/${test_application_container_image} docker://quay.io/${RHT_OCP4_QUAY_USER}/${test_application_container_image}
+	sudo podman login -u ${RHT_OCP4_QUAY_USER} quay.io ; sudo skopeo copy containers-storage:localhost/${imagestream} docker://quay.io/${RHT_OCP4_QUAY_USER}/${imagestream}
 	___pause
 }
 
@@ -158,8 +161,8 @@ function __6() {
   oc secrets link builder quayio
   ___pause
   
-  ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 5 "(re-)import the image from quay.io" "oc import-image ${test_application_container_image} --from quay.io/${RHT_OCP4_QUAY_USER}/${test_application_container_image} --confirm"
-  oc import-image ${test_application_container_image} --from quay.io/${RHT_OCP4_QUAY_USER}/${test_application_container_image} --confirm
+  ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 5 "(re-)import the image from quay.io" "oc import-image ${imagestream} --from quay.io/${RHT_OCP4_QUAY_USER}/${imagestream} --confirm"
+  oc import-image ${imagestream} --from quay.io/${RHT_OCP4_QUAY_USER}/${imagestream} --confirm
   ___pause
 
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 6 "verify the is" "oc get is"
@@ -190,13 +193,14 @@ function __8() {
 function __9() {
   local lab_chap=9
   ___chapterDescriptionPrint ${lab_number} ${lab_chap} "Deploy and test the go-hello application from your personal GitHub fork of the DO288-apps repository to the classroom OpenShift cluster. Be sure to reference the custom-s2i branch you created in the previous step when you deploy the application. The application echoes back a greeting to the resource requested by the HTTP request. For example, invoking the application with the following URL: http://greet-youruser-custom-s2i.apps.cluster.domain.example.com/user1, returns the following response: 'Hello user1!. Welcome!'"
+	___pause
   
   context_dir="go-hello"
   
   resource_to_test="user1"
   
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 1 "deploy the new app using s2i from github branch" "oc new-app --as-deployment-config --name ${app_name} s2i-do288-go~http://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps#${lab_name} --context-dir=go-hello"
-  oc new-app --as-deployment-config --name ${app_name} s2i-do288-go~http://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps#${lab_name} --context-dir=${context_dir}
+  oc new-app --as-deployment-config --name ${app_name} ${imagestream}~http://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps#${lab_name} --context-dir=${context_dir}
   ___pause
   
   ___commandWithDescriptionPrint ${lab_number} ${lab_chap} 2 "check the logs" "oc logs -f bc/${app_name}"
